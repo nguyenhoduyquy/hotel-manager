@@ -1,0 +1,36 @@
+version: "3"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.0
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      
+  backend:
+    image: hotel-manager-backend:1.0
+    container_name: hotel-manager-backend
+    restart: "on-failure"
+    ports:
+     - "8080:8080"
+    environment:
+      - ES_HOST=elasticsearch
+      - PORT=8080
+    depends_on:
+      - elasticsearch
+
+volumes:
+  data01:
+    driver: local
+

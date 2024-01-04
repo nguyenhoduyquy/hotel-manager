@@ -1,0 +1,9 @@
+<archetype>
+  <id>fe</id>
+  <sources>
+    <source>src/main/java/com.hotel.App.java</source>
+  </sources>
+  <testSources>
+    <source>src/test/java/AppTest.java</source>
+  </testSources>
+</archetype>
